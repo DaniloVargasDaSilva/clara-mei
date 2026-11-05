@@ -1,4 +1,4 @@
-# Clara — MEI na Mão
+# Clara
 
 Copiloto financeiro para microempreendedoras brasileiras que já vendem e querem compreender melhor os números do próprio negócio.
 
@@ -14,15 +14,16 @@ A proposta combina uma experiência guiada com recursos de inteligência artific
 
 ## Problema
 
-Muitas microempreendedoras:
+Microempreendedoras frequentemente enfretam dificuldades para:
 
-- Registram entradas e saídas de maneira informal ou irregular;
-- Misturam, na prática, o dinheiro pessoal e o dinheiro do negócio;
-- Não conhecem todos os custos envolvidos em seus produtos ou serviços;
-- Definem preços sem considerar taxas, despesas e margem desejada;
-- Têm dificuldade para interpretar os números e transformá-los em decisões.
+- Registrar e categorizar receitas e despesas;
+- Separar as movimentações financeiras pessoais das movimentações do negócio;
+- Conhecer os custos envolvidos na produção de um produto ou na prestação de um serviço;
+- Definir preços considerando custos, taxas e margem desejada;
+- Entender se o negócio está gerando resultados positivos;
+- Transformar informações financeiras em decisões práticas.
 
-O desafio não é apenas registrar valores: é compreender o que eles significam para a saúde financeira do negócio.
+O problema não é necessariamente a falta de ferramentas financeiras, mas a dificuldade de utilizá-las de maneira consistente e compreender as informações que elas apresentam.
 
 ## Solução proposta
 
@@ -259,6 +260,14 @@ Princípios que orientarão a implementação:
 
 Projeto em desenvolvimento para fins educacionais e demonstração de aplicação de inteligência artificial à inclusão e à gestão financeira.
 
-Desenvolvido por **Iridiana Campos**.
 
-[LinkedIn](https://www.linkedin.com/in/iridiana-amarante/)
+
+</p>
+<p align="center">
+Desenvolvido com 💙 por <strong>Iridiana Campos</strong>
+</p>
+<p align="center">
+<a href="https://www.linkedin.com/in/iridiana-amarante/" target="_blank">
+<img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+</a>
+&nbsp;&nbsp;
