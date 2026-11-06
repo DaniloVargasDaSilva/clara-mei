@@ -58,7 +58,6 @@ export default function Home() {
               Ver desenvolvimento no GitHub <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <p className="hero-note">Uma ideia que transforma números em autonomia.</p>
         </div>
 
         <div className="hero-art" aria-label="Ilustração conceitual de organização financeira">
@@ -75,7 +74,6 @@ export default function Home() {
           <div className="art-sparkle sparkle-one">✳</div>
           <div className="art-sparkle sparkle-two">✳</div>
         </div>
-        <div className="hero-index"><span>01</span><span className="index-line" /><span>CLAREZA FINANCEIRA</span></div>
       </section>
 
       <section className="problem-section" id="sobre">
@@ -124,7 +122,6 @@ export default function Home() {
       </section>
 
       <section className="principles-section" id="proposito">
-        <div className="principles-mark">c.</div>
         <div className="principles-content">
           <div className="section-kicker">Tecnologia com propósito</div>
           <h2>Mais do que automatizar tarefas, queremos <em>ampliar a autonomia.</em></h2>
