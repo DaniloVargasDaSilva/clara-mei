@@ -1,5 +1,4 @@
-@'
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *.pyo
@@ -22,4 +21,3 @@ node_modules/
 # Operating system
 .DS_Store
 Thumbs.db
-'@ | Set-Content -Encoding utf8 .gitignore
