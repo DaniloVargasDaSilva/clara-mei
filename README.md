@@ -14,7 +14,7 @@ A proposta combina uma experiência guiada com recursos de inteligência artific
 
 ## Problema
 
-Microempreendedoras frequentemente enfretam dificuldades para:
+Microempreendedoras frequentemente enfrentam dificuldades para:
 
 - Registrar e categorizar receitas e despesas;
 - Separar as movimentações financeiras pessoais das movimentações do negócio;
@@ -119,13 +119,26 @@ O backend será responsável pelas regras de negócio, cálculos, validações e
 
 ```text
 clara-mei/
-├── frontend/   # Aplicação web Next.js
-├── backend/    # API Python/FastAPI
-├── docs/       # Documentação e decisões de arquitetura
-└── README.md
+├── frontend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── health/
+│   │   │       └── route.ts
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── .env.example
+│   ├── next.config.ts
+│   └── README.md
+├── backend/
+│   ├── app/
+│   │   └── main.py
+│   └── requirements.txt
+├── docs/
+├── README.md
+└── .gitignore
 ```
 
-As pastas e aplicações serão criadas conforme a implementação evoluir.
+A estrutura será ampliada conforme a implementação dos módulos de negócio, testes, documentação e persistência.
 
 ## Como executar
 
@@ -133,7 +146,7 @@ As pastas e aplicações serão criadas conforme a implementação evoluir.
 
 - Git;
 - Node.js em versão LTS e npm;
-- Python 3.11 ou superior;
+- Python 3.10.11;
 - Visual Studio Code.
 
 ### 1. Clonar o repositório
@@ -143,26 +156,9 @@ git clone https://github.com/iri-campos/clara-mei.git
 cd clara-mei
 ```
 
-### 2. Criar o frontend
+### 2. Configurar o backend
 
 Na raiz do repositório:
-
-```bash
-npx create-next-app@latest frontend --ts --app --eslint --use-npm
-```
-
-Quando a instalação terminar:
-
-```bash
-cd frontend
-npm run dev
-```
-
-A aplicação de desenvolvimento ficará disponível em http://localhost:3000.
-
-### 3. Preparar o backend
-
-Em outro terminal, na raiz do repositório:
 
 ```bash
 cd backend
@@ -181,60 +177,120 @@ Ative o ambiente virtual:
 source .venv/bin/activate
 ```
 
-Instale as dependências iniciais:
+Instale as dependências:
 
 ```bash
-pip install fastapi uvicorn
-```
-
-Crie o arquivo `backend/app/main.py` com o conteúdo:
-
-```python
-from fastapi import FastAPI
-
-app = FastAPI(title="Clara API", version="0.1.0")
-
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+python -m pip install -r requirements.txt
 ```
 
 Com o ambiente virtual ativo e dentro da pasta `backend`, execute:
 
 ```bash
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
 ```
 
-A API ficará disponível em http://localhost:8000. A documentação interativa poderá ser acessada em http://localhost:8000/docs e o teste de saúde em http://localhost:8000/health.
+A API ficará disponível em:
 
-> **Atenção:** estes passos inicializam as aplicações. A integração com Supabase, autenticação, funcionalidades financeiras e recursos de IA serão configurados nas próximas etapas do desenvolvimento.
+- API: http://127.0.0.1:8000
+- Health check: http://127.0.0.1:8000/health
+- Documentação interativa: http://127.0.0.1:8000/docs
+
+A documentação interativa fica disponível no ambiente de desenvolvimento. Em produção, as rotas `/docs`, `/redoc` e `/openapi.json` são desabilitadas.
+
+### 3. Configurar o frontend
+
+Abra outro terminal na raiz do repositório:
+
+```bash
+cd frontend
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Crie o arquivo local de variáveis de ambiente a partir do exemplo:
+
+**Windows PowerShell**
+```powershell
+Copy-Item .env.example .env.local
+```
+
+**Linux/macOS / bash**
+```bash
+cp .env.example .env.local
+```
+
+> Execute esse comando somente se o arquivo `.env.local` ainda não existir. Não sobrescreva configurações locais já existentes.
+
+Inicie a aplicação:
+
+```bash
+npm run dev
+```
+
+O frontend ficará disponível em http://localhost:3000.
+
+### 4. Validar a integração
+
+Com frontend e backend em execução, acesse: http://localhost:3000/api/health.
+
+A rota do frontend consulta o endpoint de saúde do backend e retorna uma resposta filtrada, sem expor diretamente toda a resposta da API.
+
+### 5. Validar o build de produção
+
+Na pasta `frontend`, execute:
+
+```bash
+npm run build
+```
+
+Esse comando verifica a compilação otimizada da aplicação e a validação de tipos do TypeScript.
 
 ## Configuração e variáveis de ambiente
 
-Não armazene credenciais no código-fonte. Quando a integração for implementada, utilize arquivos locais de ambiente, como `.env.local` no frontend e `.env` no backend, mantendo-os fora do Git.
+Não armazene credenciais no código-fonte. Utilize arquivos locais de ambiente e mantenha-os fora do Git.
 
-Exemplos de nomes de variáveis esperadas:
+**Frontend**
 
-**Frontend — exemplo futuro**
+Arquivo `.env.local`:
+
 ```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_API_URL=http://localhost:8000
+API_BASE_URL=http://127.0.0.1:8000
 ```
 
-**Backend — exemplo futuro**
+O `API_BASE_URL` é utilizado pelas rotas do Next.js para se comunicar com a API FastAPI. Não deve ser exposto como variável pública do navegador.
+
+O arquivo `.env.example` contém o exemplo de configuração e pode ser compartilhado no repositório, pois não possui credenciais.
+
+**Backend**
+
+A variável `ENVIRONMENT` controla o ambiente de execução:
+
 ```env
-SUPABASE_URL=
-SUPABASE_SERVICE_ROLE_KEY=
-DATABASE_URL=
+ENVIRONMENT=development
 ```
 
-Preencha os valores somente após configurar os serviços correspondentes. A chave `SUPABASE_SERVICE_ROLE_KEY` é secreta e deve existir exclusivamente no backend; nunca a exponha no frontend ou em commits.
+Quando configurada como produção, a API desabilita os endpoints de documentação interativa e OpenAPI.
 
 ## Segurança e confiabilidade
 
-Princípios que orientarão a implementação:
+A implementação já contempla algumas medidas iniciais de segurança e confiabilidade.
+
+**Medidas implementadas**
+
+- Variáveis de ambiente para configurações locais;
+- Arquivos `.env.local` excluídos do controle de versão;
+- Timeout de 5 segundos na comunicação entre frontend e backend;
+- Filtragem e validação da resposta recebida pelo endpoint de saúde;
+- Tratamento de falhas de comunicação sem exposição de detalhes internos;
+- Headers HTTP de segurança no frontend;
+- HSTS habilitado somente em ambiente de produção;
+- Documentação e endpoints OpenAPI desabilitados em produção.
+
+**Princípios que orientarão a implementação**
 
 - Autenticação e autorização de acesso;
 - Isolamento dos dados por negócio;
@@ -245,16 +301,37 @@ Princípios que orientarão a implementação:
 - Uso de dados sintéticos em testes e demonstrações;
 - Separação entre saldo de caixa, resultado gerencial estimado e lucro contábil.
 
-## Próximos passos
+A implementação de autenticação, autorização, persistência e isolamento por negócio ainda faz parte da evolução do projeto.
 
-1. Preparar a estrutura do monorepositório;
-2. Inicializar frontend e backend;
-3. Configurar Supabase e persistência;
-4. Implementar autenticação e isolamento por negócio;
-5. Construir o fluxo de registro financeiro;
-6. Implementar os cálculos de precificação;
-7. Integrar a interpretação com IA e a etapa de confirmação;
-8. Construir o painel e preparar a demonstração.
+## Estado atual do desenvolvimento
+
+### Infraestrutura inicial
+
+- [x] Repositório GitHub configurado;
+- [x] Frontend Next.js com TypeScript inicializado;
+- [x] Backend FastAPI inicializado;
+- [x] Ambiente virtual Python configurado;
+- [x] Dependências diretas do backend organizadas em `requirements.txt`;
+- [x] Variáveis de ambiente do frontend configuradas;
+- [x] Endpoint `/health` implementado no backend;
+- [x] Rota `/api/health` implementada no frontend;
+- [x] Comunicação frontend → backend validada;
+- [x] Headers HTTP de segurança configurados;
+- [x] Proteção dos endpoints de documentação em produção;
+- [x] Build de produção do frontend validado.
+
+### Próximos passos
+
+1. Estruturar os testes automatizados do backend;
+2. Configurar Ruff para padronização e análise estática do Python;
+3. Implementar integração contínua com GitHub Actions;
+4. Consolidar a documentação de arquitetura e modelo de dados;
+5. Configurar Supabase e persistência;
+6. Implementar autenticação e isolamento por negócio;
+7. Construir o fluxo de registro financeiro;
+8. Implementar os cálculos de precificação;
+9. Integrar a interpretação com IA e a etapa de confirmação;
+10. Construir o painel e preparar a demonstração.
 
 ## Licença e autoria
 
