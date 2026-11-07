@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Sans, Young_Serif } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const display = Young_Serif({ variable: "--font-display", subsets: ["latin"], weight: "400" });
+const sans = Instrument_Sans({ variable: "--font-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Clara | Gestão financeira que fala a sua língua",
+  title: "Clara | Quanto sobra, de verdade, em cada venda",
   description:
-    "A Clara é uma assistente de gestão financeira pensada para microempreendedoras que querem organizar suas finanças, compreender seus resultados e tomar decisões melhores.",
+    "A Clara calcula o custo real do que você vende e mostra o preço que deixa lucro. Feita para microempreendedoras brasileiras.",
   applicationName: "Clara",
   openGraph: {
-    title: "Clara | Gestão financeira que fala a sua língua",
+    title: "Clara | Quanto sobra, de verdade, em cada venda",
     description:
-      "Mais clareza financeira e autonomia para microempreendedoras brasileiras.",
+      "Simulador de preço para MEIs: ingredientes, embalagem, tempo, contas do mês e taxa da venda na mesma conta.",
     locale: "pt_BR",
     type: "website",
   },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="pt-BR" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
